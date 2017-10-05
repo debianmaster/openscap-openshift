@@ -2,6 +2,7 @@ node {
   //stage 'build app'
   //openshiftBuild(namespace: 'default', buildConfig: 'welcome', showBuildLogs: 'true')
   stage 'execute image scan'
+    slackSend (color: '#FFFF00', message: "STARTED: Job")
     openshift.withCluster() {
 	def models = openshift.process( "default//image-inspector-template", "-p", "APPLICATION_NAME=image-inspector", "-p", "IMAGE_URL=docker-registry-default.apps.ocp.tauil.org/demo/welcome:latest")
         echo "Creating this template will instantiate ${models.size()} objects"
